@@ -23,6 +23,8 @@ def win():
     print("\t2 - Pingar o Google")
     print("\t3 - Printar o hostname da maquina")
     print("\t4 - Sair")    
+    print("\t5 - Abrir painel de controle")
+    print("\t6 - Abrir gerenciador de tarefas")
     print("*"*65)
 
 
@@ -61,6 +63,10 @@ def main():
                 print(os.system("hostname"))
             elif new == "4":
                 print("Fim do programa")
+            elif new == "5":
+                print(os.system("controlpanel"))
+            elif new == "6":
+                print(os.system("taskmgr"))
                 break
 
 
