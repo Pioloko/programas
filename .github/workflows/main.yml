@@ -1,0 +1,24 @@
+name: Merge Card to HML
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'card-*'
+
+jobs:
+  merge-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Merge branches
+        run: |
+          git config --global user.email "ramon.piologo@hotmail.com"
+          git config --global user.name "pioloko"
+          for branch in $(git branch --format='%(refname:short)' | grep -E 'card-[0-9]+$'); do
+            git checkout hml
+            git merge "$branch" --no-edit --no-ff
+          done
+          git push origin hml
