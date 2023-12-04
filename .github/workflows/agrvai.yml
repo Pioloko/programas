@@ -18,6 +18,7 @@ jobs:
         
     - name: merge com linux 
       run: |
+        git fetch
         git checkout merge
         for branch in $(git branch --format='%(refname:short)' | grep -E 'card-[0-9]+$'); do
           git merge "$branch" --no-edit --no-ff
