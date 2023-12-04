@@ -1,25 +1,28 @@
-name : merge
+name: merge
 
 on:
   schedule:
-    - cron: '*/1 * * * *' # Executa a cada 1 minuto
-  workflow_dispatch: # Permite acionar manualmente
+    - cron: '*/1 * * * *'  # Executa a cada 1 minuto
+  workflow_dispatch:       # Permite acionar manualmente
 
 jobs:
   continuos-integration:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: set conta
-      run: |
-        git config --local user.email "ramon.piologo@hotmail.com"
-        git config --local user.name "Pioloko"
-        
-    - name: merge com linux 
-      run: |
-        git fetch origin # Busca as atualizações do repositório remoto
-        git checkout merge
-        git merge origin/card-02 --no-ff # Mescla a branch card-02
-        git merge origin/card-01 --no-ff # Mescla a branch card-01
-        git push origin merge
+      - name: Setar informações de usuário
+        run: |
+          git config --local user.email "ramon.piologo@hotmail.com"
+          git config --local user.name "Pioloko"
+
+      - name: Mesclar automaticamente as branches
+        run: |
+          git fetch origin  # Busca as atualizações do repositório remoto
+          git checkout merge
+
+          # Loop para mesclar todas as branches 'card-*'
+          for branch in $(git branch --format='%(refname:short)' | grep -E 'origin/card-[0-9]+$'); do
+            git merge "$branch" --no-ff  # Mescla cada branch 'card-*'
+            git push origin merge  # Faz push da branch 'merge' com as mesclagens
+          done
