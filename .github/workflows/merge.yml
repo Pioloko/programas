@@ -1,0 +1,16 @@
+name : merge
+
+on : pull_request
+
+jobs:
+  continuos-integration:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: merge com linux 
+      run: |
+        for branch in $(git branch --format='%(refname:short)' | grep -E 'card-[0-9]+$'); do
+          git checkout merge
+          git merge "$branch" --no-edit --no-ff
+        done
+        git push origin hml
