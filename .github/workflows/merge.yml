@@ -1,6 +1,8 @@
 name : merge
 
-on : pull_request
+on:
+  schedule:
+    - cron: '*/1 * * * *' # Executa a cada 1 minuto
 
 jobs:
   continuos-integration:
