@@ -20,8 +20,10 @@ jobs:
       run: |
         git fetch
         git checkout merge
-        for branch in $(git branch --format='%(refname:short)' | grep -E 'card-[0-9]+$'); do
-          git merge "$branch" --no-edit --no-ff
-          echo "$branch"
-        done
+        git merge card-02 --no-ff 
+        git merge card-01 --no-ff
+        # for branch in $(git branch --format='%(refname:short)' | grep -E 'card-[0-9]+$'); do
+        #   git merge "$branch" --no-edit --no-ff
+        #   echo "$branch"
+        # done
         git push origin merge
