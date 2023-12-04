@@ -15,4 +15,4 @@ jobs:
           git checkout merge
           git merge "$branch" --no-edit --no-ff
         done
-        git push origin hml
+        git push origin merge
