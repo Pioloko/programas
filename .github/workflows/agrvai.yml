@@ -19,7 +19,7 @@ jobs:
     - name: merge com linux 
       run: |
         git fetch origin # Busca as atualizações do repositório remoto
-        git checkout merge
-        git merge origin/card-02 --no-ff # Mescla a branch card-02
-        git merge origin/card-01 --no-ff # Mescla a branch card-01
-        git push origin merge
+        git checkout merge2
+        git merge2 origin/card-02 --no-ff # Mescla a branch card-02
+        git merge2 origin/card-01 --no-ff # Mescla a branch card-01
+        git push origin merge2
