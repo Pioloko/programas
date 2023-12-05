@@ -19,16 +19,16 @@ jobs:
     - name: List branches with 'card-' pattern
       id: list-branches
       run: |
+        git fetch origin # Busca as atualizações do repositório remoto
         branches=$(git branch -a --format='%(refname:short)' | grep -E 'card-[0-9]+$' | xargs)
         echo "::set-output name=branches::$branches"
 
     - name: Merge card branches
       run: |
-        git fetch origin # Busca as atualizações do repositório remoto
         git checkout merge2
 
         for branch in ${{ steps.list-branches.outputs.branches }}; do
           git merge --no-ff "$branch" --no-edit
         done
 
-        git push origin merge
+        git push origin merge2
