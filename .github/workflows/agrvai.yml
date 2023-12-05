@@ -2,8 +2,8 @@ name : merge
 
 on:
   schedule:
-  #   - cron: '*/1 * * * *' # Executa a cada 1 minuto
-  # workflow_dispatch: # Permite acionar manualmente
+    - cron: '*/1 * * * *' # Executa a cada 1 minuto
+  workflow_dispatch: # Permite acionar manualmente
 
 jobs:
   continuos-integration:
@@ -16,10 +16,18 @@ jobs:
         git config --local user.email "ramon.piologo@hotmail.com"
         git config --local user.name "Pioloko"
         
-    - name: merge com linux 
+    - name: List branches with 'card-' pattern
+      id: list-branches
       run: |
-        git fetch origin # Busca as atualizações do repositório remoto
+        branches=$(git branch -a --format='%(refname:short)' | grep -E 'card-[0-9]+$' | xargs)
+        echo "::set-output name=branches::$branches"
+
+    - name: Merge card branches
+      run: |
         git checkout merge2
-        git merge origin/card-02 --no-ff # Mescla a branch card-02
-        git merge origin/card-01 --no-ff # Mescla a branch card-01
-        git push origin merge2
+
+        for branch in ${{ steps.list-branches.outputs.branches }}; do
+          git merge --no-ff "$branch" --no-edit
+        done
+
+        git push origin merge
