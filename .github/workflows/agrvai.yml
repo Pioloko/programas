@@ -24,6 +24,7 @@ jobs:
 
     - name: Merge card branches
       run: |
+        git fetch origin # Busca as atualizações do repositório remoto
         git checkout merge2
 
         for branch in ${{ steps.list-branches.outputs.branches }}; do
