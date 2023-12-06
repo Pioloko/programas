@@ -2,8 +2,8 @@ name : merge
 
 on:
   schedule:
-    - cron: '*/1 * * * *' # Executa a cada 1 minuto
-  workflow_dispatch: # Permite acionar manualmente
+  #   - cron: '*/1 * * * *' # Executa a cada 1 minuto
+  # workflow_dispatch: # Permite acionar manualmente
 
 jobs:
   continuos-integration:
